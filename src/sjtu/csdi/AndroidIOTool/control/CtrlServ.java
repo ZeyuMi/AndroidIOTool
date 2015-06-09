@@ -124,14 +124,14 @@ public class CtrlServ extends Service {
             }
         });
 
-        mMoveBtn.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Toast.makeText(CtrlServ.this, "onClick", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        mMoveBtn.setOnClickListener(new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                Toast.makeText(CtrlServ.this, "onClick", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         BtnClickListener listener = new BtnClickListener();
         mStartBtn.setOnClickListener(listener);

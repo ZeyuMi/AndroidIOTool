@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+package sjtu.csdi.AndroidIOTool.analyze;
+
 import java.util.Iterator;
 
 /**
