@@ -512,7 +512,7 @@ public class Analyzer implements AnalyzerInterface{
                             table.set(0, table.get(0)+1);
                         }else if(size < 4096){
                             table.set(1, table.get(1)+1);
-                        }else if(size < (64 * 1025)){
+                        }else if(size < (64 * 1024)){
                             table.set(2, table.get(2)+1);
                         }else if(size < (1024 * 1024)){
                             table.set(3, table.get(3)+1);
