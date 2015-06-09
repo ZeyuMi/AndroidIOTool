@@ -36,6 +36,7 @@ public class ListAdapter extends SimpleAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         return createViewFromResource(position, convertView, parent, mResource);
     }
+
     private View createViewFromResource(int position, View convertView,
                                         ViewGroup parent, int resource) {
         View v;
@@ -104,7 +105,6 @@ public class ListAdapter extends SimpleAdapter {
 
     public void setViewImage(ImageView v, Drawable value) {
         v.setImageDrawable(value);
-
     }
 
 }

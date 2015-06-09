@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import sjtu.csdi.AndroidIOTool.control.CtrlServ;
 import sjtu.csdi.AndroidIOTool.control.ListAdapter;
 
@@ -49,12 +50,19 @@ public class AppListAty extends Activity {
             //循环读取存到HashMap,再增加到ArrayList.一个HashMap就是一项
         }
 
-        adapter = new ListAdapter(this, items, R.layout.app_item, new String[]{
-                getResources().getString(R.string.icon),
-                getResources().getString(R.string.appName),
-                getResources().getString(R.string.packageName)},
-                new int[]{R.id.icon,
-                        R.id.app_name, R.id.package_name});
+        adapter = new ListAdapter(
+                AppListAty.this,
+                items,
+                R.layout.app_item,
+                new String[]{
+                    getResources().getString(R.string.icon),
+                    getResources().getString(R.string.appName),
+                    getResources().getString(R.string.packageName)},
+                new int[]{
+                        R.id.icon,
+                        R.id.app_name,
+                        R.id.package_name
+                });
         //参数:Context,ArrayList(item的集合),item的layout,包含ArrayList中Hashmap的key的数组,key所对应的值相对应的控件id
 //        lv.setAdapter(adapter);
         lv.setAdapter(adapter);
@@ -71,12 +79,17 @@ public class AppListAty extends Activity {
 //            intent.putExtra(getResources().getString(R.string.APP_NAME_KEY), packageInfo.get("appName").toString());
 //            intent.putExtra(getResources().getString(R.string.APP_PACKAGENAME_KEY), packageInfo.get("packageName").toString());
 //            startActivity(intent);
-            Intent startIntent = pm.getLaunchIntentForPackage(packageInfo.get("packageName").toString());
-            //TODO 这里存在问题，有些app是不能调用startActivity的
-            startActivity(startIntent);
-            Intent ctrlIntent = new Intent(AppListAty.this, CtrlServ.class);
-            ctrlIntent.putExtra("packageName",packageInfo.get("packageName").toString());
-            startService(ctrlIntent);
+            try{
+                Intent startIntent = pm.getLaunchIntentForPackage(packageInfo.get("packageName").toString());
+                //TODO 这里存在问题，有些app是不能调用startActivity的
+                startActivity(startIntent);
+                Intent ctrlIntent = new Intent(AppListAty.this, CtrlServ.class);
+                ctrlIntent.putExtra("packageName",packageInfo.get("packageName").toString());
+                startService(ctrlIntent);
+            }catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(AppListAty.this, "This app cannot be open directly!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
