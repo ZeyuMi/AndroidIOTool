@@ -5,11 +5,7 @@ import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.WindowManager;
+import android.view.*;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager.LayoutParams;
@@ -30,7 +26,10 @@ public class CtrlServ extends Service {
     //创建浮动窗口设置布局参数的对象
     WindowManager mWindowManager;
 
-    Button mFloatView;
+    private Button mMoveBtn;
+    private Button mStartBtn;
+    private Button mStopBtn;
+    private Button mCancelBtn;
 
     private static final String TAG = "CtrlServ";
 
@@ -41,6 +40,7 @@ public class CtrlServ extends Service {
         Log.i(TAG, "oncreat");
         createFloatView();
         //Toast.makeText(FxService.this, "create FxService", Toast.LENGTH_LONG);
+
     }
 
     @Override
@@ -91,28 +91,31 @@ public class CtrlServ extends Service {
         Log.i(TAG, "mFloatLayout-->bottom" + mFloatLayout.getBottom());
 
         //浮动窗口按钮
-        mFloatView = (Button) mFloatLayout.findViewById(R.id.ctrl_test);
+        mMoveBtn = (Button) mFloatLayout.findViewById(R.id.ctrl_move);
+        mStartBtn = (Button) mFloatLayout.findViewById(R.id.start_rcd);
+        mStopBtn = (Button) mFloatLayout.findViewById(R.id.stop_rcd);
+        mCancelBtn = (Button) mFloatLayout.findViewById(R.id.cancel_rcd);
 
         mFloatLayout.measure(View.MeasureSpec.makeMeasureSpec(0,
                 View.MeasureSpec.UNSPECIFIED), View.MeasureSpec
                 .makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-        Log.i(TAG, "Width/2--->" + mFloatView.getMeasuredWidth() / 2);
-        Log.i(TAG, "Height/2--->" + mFloatView.getMeasuredHeight() / 2);
+        Log.i(TAG, "Width/2--->" + mMoveBtn.getMeasuredWidth() / 2);
+        Log.i(TAG, "Height/2--->" + mMoveBtn.getMeasuredHeight() / 2);
 
         //设置监听浮动窗口的触摸移动
-        mFloatView.setOnTouchListener(new OnTouchListener() {
+        mMoveBtn.setOnTouchListener(new OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 // TODO Auto-generated method stub
                 //getRawX是触摸位置相对于屏幕的坐标，getX是相对于按钮的坐标
-                wmParams.x = (int) event.getRawX() - mFloatView.getMeasuredWidth() / 2;
-                //Log.i(TAG, "Width/2--->" + mFloatView.getMeasuredWidth()/2);
+                wmParams.x = (int) event.getRawX() - mMoveBtn.getMeasuredWidth() / 2;
+
                 Log.i(TAG, "RawX" + event.getRawX());
                 Log.i(TAG, "X" + event.getX());
                 //25为状态栏的高度
-                wmParams.y = (int) event.getRawY() - mFloatView.getMeasuredHeight() / 2 - 25;
-                // Log.i(TAG, "Width/2--->" + mFloatView.getMeasuredHeight()/2);
+                wmParams.y = (int) event.getRawY() - mMoveBtn.getMeasuredHeight() / 2 - 25;
+
                 Log.i(TAG, "RawY" + event.getRawY());
                 Log.i(TAG, "Y" + event.getY());
                 //刷新
@@ -121,7 +124,7 @@ public class CtrlServ extends Service {
             }
         });
 
-        mFloatView.setOnClickListener(new OnClickListener() {
+        mMoveBtn.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -129,6 +132,11 @@ public class CtrlServ extends Service {
                 Toast.makeText(CtrlServ.this, "onClick", Toast.LENGTH_SHORT).show();
             }
         });
+
+        BtnClickListener listener = new BtnClickListener();
+        mStartBtn.setOnClickListener(listener);
+        mStopBtn.setOnClickListener(listener);
+        mCancelBtn.setOnClickListener(listener);
     }
 
     @Override
@@ -140,4 +148,21 @@ public class CtrlServ extends Service {
         }
     }
 
+    private class BtnClickListener implements OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+            switch (id) {
+                case R.id.start_rcd:
+                    break;
+                case R.id.stop_rcd:
+                    break;
+                case R.id.cancel_rcd:
+                    Toast.makeText(getApplicationContext(), "cancel record", Toast.LENGTH_SHORT).show();
+                    stopSelf();
+                    break;
+            }
+        }
+    }
 }

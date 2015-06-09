@@ -75,6 +75,7 @@ public class AppListAty extends Activity {
             //TODO 这里存在问题，有些app是不能调用startActivity的
             startActivity(startIntent);
             Intent ctrlIntent = new Intent(AppListAty.this, CtrlServ.class);
+            ctrlIntent.putExtra("packageName",packageInfo.get("packageName").toString());
             startService(ctrlIntent);
         }
     }
