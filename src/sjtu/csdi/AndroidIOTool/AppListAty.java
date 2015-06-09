@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import sjtu.csdi.AndroidIOTool.control.CtrlServ;
 import sjtu.csdi.AndroidIOTool.control.ListAdapter;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class AppListAty extends Activity {
      */
     ListView lv;
     ListAdapter adapter;
+    PackageManager pm;
     ArrayList<HashMap<String, Object>> items = new ArrayList<HashMap<String, Object>>();
 
     @Override
@@ -30,7 +32,7 @@ public class AppListAty extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_list);
         lv = (ListView) findViewById(R.id.lv);
-        PackageManager pm = getPackageManager();
+        pm = getPackageManager();
         //得到PackageManager对象
         List<PackageInfo> packs = pm.getInstalledPackages(0);
         //得到系统 安装的所有程序包的PackageInfo对象
@@ -65,10 +67,15 @@ public class AppListAty extends Activity {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             HashMap<String, Object> packageInfo = items.get(i);
-            Intent intent = new Intent(AppListAty.this, AppItemAty.class);
-            intent.putExtra(getResources().getString(R.string.APP_NAME_KEY), packageInfo.get("appName").toString());
-            intent.putExtra(getResources().getString(R.string.APP_PACKAGENAME_KEY), packageInfo.get("packageName").toString());
-            startActivity(intent);
+//            Intent intent = new Intent(AppListAty.this, AppItemAty.class);
+//            intent.putExtra(getResources().getString(R.string.APP_NAME_KEY), packageInfo.get("appName").toString());
+//            intent.putExtra(getResources().getString(R.string.APP_PACKAGENAME_KEY), packageInfo.get("packageName").toString());
+//            startActivity(intent);
+            Intent startIntent = pm.getLaunchIntentForPackage(packageInfo.get("packageName").toString());
+            //TODO 这里存在问题，有些app是不能调用startActivity的
+            startActivity(startIntent);
+            Intent ctrlIntent = new Intent(AppListAty.this, CtrlServ.class);
+            startService(ctrlIntent);
         }
     }
 }
