@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroidIOTool</string>
+    <string name="app_list_tips">请点击选择需要测试的应用项</string>
+
+    <string name="app_item_info">应用基本信息</string>
+    <string name="app_item_name">应用名：</string>
+    <string name="app_item_packagename">包名：</string>
+
+    <string name="icon">icon</string>
+    <string name="appName">appName</string>
+    <string name="packageName">packageName</string>
+
+    <string name="APP_NAME_KEY">APP_NAME_KEY</string>
+    <string name="APP_PACKAGENAME_KEY">APP_PACKAGENAME_KEY</string>
+
+    <string name="start_btn">开始测试</string>
+    <string name="cancel_btn">取消测试</string>
+</resources>
