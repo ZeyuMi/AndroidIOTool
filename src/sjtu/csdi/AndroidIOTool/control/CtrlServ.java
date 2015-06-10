@@ -1,6 +1,8 @@
 package sjtu.csdi.AndroidIOTool.control;
 
+import android.app.ActivityManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
@@ -13,6 +15,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import sjtu.csdi.AndroidIOTool.R;
+import sjtu.csdi.AndroidIOTool.Tool.Commander;
+
+import java.util.List;
 
 /**
  * Created by Yang on 2015/6/9.
@@ -31,6 +36,8 @@ public class CtrlServ extends Service {
     private Button mStopBtn;
     private Button mCancelBtn;
 
+    private String packageName;
+
     private static final String TAG = "CtrlServ";
 
     @Override
@@ -40,7 +47,12 @@ public class CtrlServ extends Service {
         Log.i(TAG, "oncreat");
         createFloatView();
         //Toast.makeText(FxService.this, "create FxService", Toast.LENGTH_LONG);
+    }
 
+    @Override
+    public void onStart(Intent intent, int startId) {
+        packageName = intent.getStringExtra("packageName");
+        Log.i(TAG, "current running app: " + packageName);
     }
 
     @Override
@@ -124,15 +136,6 @@ public class CtrlServ extends Service {
             }
         });
 
-        mMoveBtn.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Toast.makeText(CtrlServ.this, "onClick", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         BtnClickListener listener = new BtnClickListener();
         mStartBtn.setOnClickListener(listener);
         mStopBtn.setOnClickListener(listener);
@@ -146,6 +149,7 @@ public class CtrlServ extends Service {
         if (mFloatLayout != null) {
             mWindowManager.removeView(mFloatLayout);
         }
+        Log.i(TAG, TAG + " is closed");
     }
 
     private class BtnClickListener implements OnClickListener {
@@ -155,14 +159,44 @@ public class CtrlServ extends Service {
             int id = view.getId();
             switch (id) {
                 case R.id.start_rcd:
+                    startRecord();
                     break;
+
                 case R.id.stop_rcd:
+                    stopRecord();
                     break;
+
                 case R.id.cancel_rcd:
                     Toast.makeText(getApplicationContext(), "cancel record", Toast.LENGTH_SHORT).show();
                     stopSelf();
                     break;
             }
         }
+    }
+
+    private void startRecord(){
+        String[] pkgList;
+        int pid = 0;
+        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningApps =  am.getRunningAppProcesses();
+        for (ActivityManager.RunningAppProcessInfo app : runningApps){
+            pkgList = app.pkgList;
+            for (int i=0;i<pkgList.length;i++){
+                if (pkgList[i].equals(packageName)){
+                    pid = app.pid;
+                    Log.i(TAG,"current pid:" + pid);
+                    break;
+                }
+            }
+        }
+        Commander.strace(pid);
+        Toast.makeText(getApplicationContext(),"Start recording...",Toast.LENGTH_SHORT);
+    }
+
+    public void stopRecord(){
+        //1.kill strace : pkill -f strace and chmod auth
+        Commander.stopStrace();
+        Toast.makeText(getApplicationContext(),"Stop recording...",Toast.LENGTH_SHORT);
+        onDestroy();
     }
 }
