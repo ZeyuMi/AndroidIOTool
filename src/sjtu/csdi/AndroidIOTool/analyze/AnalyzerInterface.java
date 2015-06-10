@@ -1,5 +1,9 @@
+<<<<<<< HEAD
+import java.lang.reflect.Array;
+=======
 package sjtu.csdi.AndroidIOTool.analyze;
 
+>>>>>>> 8a6fc1128188691deeb7ac7bd148bd8c107b745c
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -13,7 +17,30 @@ public interface AnalyzerInterface {
     public void analyzeAll();
 
     /**
-     * get the number of bytes read or writtern in each file.
+     * Element 0 is the number of files that are related to multimedia, such as jpg, png, mp3, avi.
+     * Element 1 is the number of files that are related to productivity, such as doc, docx, xls, ppt, pptx, pdf.
+     * Element 2 is the number of files that are executable, such as apk, dex, odex, so
+     * Element 3 is the number of files that are related to sqlite, such as db, db-journal.
+     * Element 4 is the number of files that are resources, such as dat, xml, cache.
+     * Element 5 is the number of other files.
+     * @return
+     */
+    public ArrayList<Integer> getFileTypeNums();
+
+    /**
+     * Element 0 is the size of files that are related to multimedia, such as jpg, png, mp3, avi.
+     * Element 1 is the size of files that are related to productivity, such as doc, docx, xls, ppt, pptx, pdf.
+     * Element 2 is the size of files that are executable, such as apk, dex, odex, so
+     * Element 3 is the size of files that are related to sqlite, such as db, db-journal.
+     * Element 4 is the size of files that are resources, such as dat, xml, cache.
+     * Element 5 is the size of other files.
+     * @return
+     * @return
+     */
+    public ArrayList<Long> getFileTypeSizes();
+
+    /**
+     * Key is a file name, and value is the size of data that accessed in this file.
      * @return
      */
     public Map<String, Long> getFileSizes();

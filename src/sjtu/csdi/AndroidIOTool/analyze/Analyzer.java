@@ -15,6 +15,9 @@ public class Analyzer implements AnalyzerInterface{
     private ArrayList<String> traceFileList;
     private Map<String, Integer> pidsOfEachTraceLog;
 
+    private ArrayList<Integer> filetypeNums;
+    private ArrayList<Long> filetypeSizes;
+
     private Map<String, Long> fileSizes;
     private ArrayList<Integer> accessNum;
     private ArrayList<Long> accessSize;
@@ -50,6 +53,9 @@ public class Analyzer implements AnalyzerInterface{
         traceFileList = new ArrayList<String>();
         pidsOfEachTraceLog = new HashMap<String, Integer>();
 
+        filetypeNums = new ArrayList<Integer>();
+        filetypeSizes = new ArrayList<Long>();
+
         fileSizes = new HashMap<String, Long>();
         accessNum = new ArrayList<Integer>();
         accessSize = new ArrayList<Long>();
@@ -73,7 +79,7 @@ public class Analyzer implements AnalyzerInterface{
 
     private void collectTraceFileList(){
         //String path = Environment.getExternalStorageDirectory().toString()+"/strace";
-        String path = "/data/strace";
+        String path = "strace";
         File f = new File(path);
         File file[] = f.listFiles();
         for (int i=0; i < file.length; i++){
@@ -96,7 +102,7 @@ public class Analyzer implements AnalyzerInterface{
                 //if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
                     //获取指定文件对应的输入流
                     //FileInputStream fis = new FileInputStream(Environment.getExternalStorageDirectory().toString()+"/strace/" + currentLog);
-                    FileInputStream fis = new FileInputStream("/data/strace/" + currentLog);
+                    FileInputStream fis = new FileInputStream("strace/" + currentLog);
                     //将指定输入流包装成BufferReader
                     BufferedReader br = new BufferedReader(new InputStreamReader(fis));
                     String line = null;
@@ -149,7 +155,7 @@ public class Analyzer implements AnalyzerInterface{
                 //if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
                     //获取指定文件对应的输入流
                     //FileInputStream fis = new FileInputStream(Environment.getExternalStorageDirectory().toString()+"/strace/" + currentLog);
-                    FileInputStream fis = new FileInputStream("/data/strace/" + currentLog);
+                    FileInputStream fis = new FileInputStream("strace/" + currentLog);
                     //将指定输入流包装成BufferReader
                     BufferedReader br = new BufferedReader(new InputStreamReader(fis));
                     String line = null;
@@ -248,6 +254,62 @@ public class Analyzer implements AnalyzerInterface{
         accessSize.add(bothTotalSize);
     }
 
+    private void analyzeFileTypes(){
+        int multTypeNum = 0;
+        int productTypeNum = 0;
+        int executableTypeNum = 0;
+        int sqliteTypeNum = 0;
+        int resourceTypeNum = 0;
+        int otherTypeNum = 0;
+        long multTypeSize = 0;
+        long productTypeSize = 0;
+        long executableTypeSize = 0;
+        long sqliteTypeSize = 0;
+        long resourceTypeSize = 0;
+        long otherTypeSize = 0;
+
+        Iterator<String> files = fileSizes.keySet().iterator();
+        while(files.hasNext()){
+            String filename = files.next();
+            if(filename.endsWith(".jpg") || filename.endsWith(".png") || filename.endsWith(".gif") || filename.endsWith(".avi") || filename.endsWith(".flv")
+            || filename.endsWith(".mp4") || filename.endsWith(".mp3")){
+                multTypeNum++;
+                multTypeSize += fileSizes.get(filename);
+            }else if(filename.endsWith(".doc") || filename.endsWith(".docx") || filename.endsWith(".txt") || filename.endsWith(".rtf") || filename.endsWith(".html")
+                    || filename.endsWith(".html") || filename.endsWith(".ppt") || filename.endsWith(".pptx") || filename.endsWith(".xls") || filename.endsWith(".xlsx")
+                    || filename.endsWith("csv") || filename.endsWith("pdf")){
+                productTypeNum++;
+                productTypeSize += fileSizes.get(filename);
+            }else if(filename.endsWith(".apk") || filename.endsWith(".so") || filename.endsWith(".dex") || filename.endsWith(".odex")){
+                executableTypeNum++;
+                executableTypeSize += fileSizes.get(filename);
+            }else if(filename.endsWith(".db") || filename.endsWith(".db-journal")){
+                sqliteTypeNum++;
+                sqliteTypeSize += fileSizes.get(filename);
+            }else if(filename.endsWith(".xml") || filename.endsWith(".dat") || filename.endsWith(".cache")){
+                resourceTypeNum++;
+                resourceTypeSize += fileSizes.get(filename);
+            }else{
+                otherTypeNum++;
+                otherTypeSize += fileSizes.get(filename);
+                System.out.println(filename);
+            }
+        }
+
+        filetypeNums.add(multTypeNum);
+        filetypeNums.add(productTypeNum);
+        filetypeNums.add(executableTypeNum);
+        filetypeNums.add(sqliteTypeNum);
+        filetypeNums.add(resourceTypeNum);
+        filetypeNums.add(otherTypeNum);
+        filetypeSizes.add(multTypeSize);
+        filetypeSizes.add(productTypeSize);
+        filetypeSizes.add(executableTypeSize);
+        filetypeSizes.add(sqliteTypeSize);
+        filetypeSizes.add(resourceTypeSize);
+        filetypeSizes.add(otherTypeSize);
+    }
+
     private void analyzeSequentiality(Map<Integer, String> fileNames){
         Map<String, Integer> currentPositions = new HashMap<String, Integer>();
         Map<String, Integer> backSizes = new HashMap<String, Integer>();
@@ -259,7 +321,7 @@ public class Analyzer implements AnalyzerInterface{
                 //if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
                 //获取指定文件对应的输入流
                 //FileInputStream fis = new FileInputStream(Environment.getExternalStorageDirectory().toString()+"/strace/" + currentLog);
-                FileInputStream fis = new FileInputStream("/data/strace/" + currentLog);
+                FileInputStream fis = new FileInputStream("strace/" + currentLog);
                 //将指定输入流包装成BufferReader
                 BufferedReader br = new BufferedReader(new InputStreamReader(fis));
                 String line = null;
@@ -404,7 +466,7 @@ public class Analyzer implements AnalyzerInterface{
                 //if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
                 //获取指定文件对应的输入流
                 //FileInputStream fis = new FileInputStream(Environment.getExternalStorageDirectory().toString()+"/strace/" + currentLog);
-                FileInputStream fis = new FileInputStream("/data/strace/" + currentLog);
+                FileInputStream fis = new FileInputStream("strace/" + currentLog);
                 //将指定输入流包装成BufferReader
                 BufferedReader br = new BufferedReader(new InputStreamReader(fis));
                 String line = null;
@@ -461,7 +523,7 @@ public class Analyzer implements AnalyzerInterface{
                 //if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
                 //获取指定文件对应的输入流
                 //FileInputStream fis = new FileInputStream(Environment.getExternalStorageDirectory().toString()+"/strace/" + currentLog);
-                FileInputStream fis = new FileInputStream("/data/strace/" + currentLog);
+                FileInputStream fis = new FileInputStream("strace/" + currentLog);
                 //将指定输入流包装成BufferReader
                 BufferedReader br = new BufferedReader(new InputStreamReader(fis));
                 String line = null;
@@ -580,7 +642,7 @@ public class Analyzer implements AnalyzerInterface{
                 //if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
                 //获取指定文件对应的输入流
                 //FileInputStream fis = new FileInputStream(Environment.getExternalStorageDirectory().toString()+"/strace/" + currentLog);
-                FileInputStream fis = new FileInputStream("/data/strace/" + currentLog);
+                FileInputStream fis = new FileInputStream("strace/" + currentLog);
                 //将指定输入流包装成BufferReader
                 BufferedReader br = new BufferedReader(new InputStreamReader(fis));
                 String line = null;
@@ -654,7 +716,7 @@ public class Analyzer implements AnalyzerInterface{
                 //if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
                 //获取指定文件对应的输入流
                 //FileInputStream fis = new FileInputStream(Environment.getExternalStorageDirectory().toString()+"/strace/" + currentLog);
-                FileInputStream fis = new FileInputStream("/data/strace/" + currentLog);
+                FileInputStream fis = new FileInputStream("strace/" + currentLog);
                 //将指定输入流包装成BufferReader
                 BufferedReader br = new BufferedReader(new InputStreamReader(fis));
                 String line = null;
@@ -700,12 +762,24 @@ public class Analyzer implements AnalyzerInterface{
         clearResults();
         collectTraceFileList();
         Map<Integer, String> fileNamesOpenedInAllProcesses = prereadAllOpenedFileNamesInAllProcesses();
+
         analyzeAccessPatterns(fileNamesOpenedInAllProcesses);
+        analyzeFileTypes();
         analyzeSequentiality(fileNamesOpenedInAllProcesses);
         analyzePreallocation(fileNamesOpenedInAllProcesses);
         analyzeFsyncProperty(fileNamesOpenedInAllProcesses);
         analyzeAtomicProperty(fileNamesOpenedInAllProcesses);
         analyzeThreads();
+    }
+
+    @Override
+    public ArrayList<Integer> getFileTypeNums(){
+        return filetypeNums;
+    }
+
+    @Override
+    public ArrayList<Long> getFileTypeSizes(){
+        return filetypeSizes;
     }
 
     @Override
