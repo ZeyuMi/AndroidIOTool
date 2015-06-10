@@ -1,6 +1,7 @@
 package sjtu.csdi.AndroidIOTool.chart;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -13,11 +14,16 @@ import com.github.mikephil.charting.data.PieDataSet;
 import sjtu.csdi.AndroidIOTool.R;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Yang on 2015/6/10.
  */
+
 public class PieChartAty extends Activity {
+    private String[] typeTag;
+    private int[] typeNum;
+    private String description;
     private PieChart mChart;
 
     @Override
@@ -25,8 +31,14 @@ public class PieChartAty extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.piechart_aty);
 
+        Intent intent = getIntent();
+        typeTag = intent.getStringArrayExtra(getResources().getString(R.string.typeTag));
+        //TODO
+        typeNum = intent.getIntArrayExtra(getResources().getString(R.string.typeNum));
+
         mChart = (PieChart) findViewById(R.id.pie_chart);
-        PieData mPieData = getPieData(4, 100);
+        PieData mPieData = getPieData();
+
         showChart(mChart, mPieData);
     }
 
@@ -63,7 +75,7 @@ public class PieChartAty extends Activity {
 
 //      mChart.setOnAnimationListener(this);
 
-        pieChart.setCenterText("Quarterly Revenue");  //饼状图中间的文字
+//        pieChart.setCenterText("Quarterly Revenue");  //饼状图中间的文字
 
         //设置数据
         pieChart.setData(pieData);
@@ -82,47 +94,49 @@ public class PieChartAty extends Activity {
         // mChart.spin(2000, 0, 360);
     }
 
-    /**
-     *
-     * @param count 分成几部分
-     * @param range
-     */
-    private PieData getPieData(int count, float range) {
+    private PieData getPieData() {
+
+        int count = typeTag.length;
+        int totalNum = sum(typeNum);
 
         ArrayList<String> xValues = new ArrayList<String>();  //xVals用来表示每个饼块上的内容
+        ArrayList<Entry> yValues = new ArrayList<Entry>();  //yVals用来表示封装每个饼块的实际数据
+        ArrayList<Integer> colors = new ArrayList<Integer>();
 
         for (int i = 0; i < count; i++) {
-            xValues.add("Quarterly" + (i + 1));  //饼块上显示成Quarterly1, Quarterly2, Quarterly3, Quarterly4
+            if (typeNum[i] != 0) {
+                xValues.add(typeTag[i]);
+                yValues.add(new Entry(typeNum[i] / totalNum, i));
+                colors.add(genColor());
+            }
         }
 
-        ArrayList<Entry> yValues = new ArrayList<Entry>();  //yVals用来表示封装每个饼块的实际数据
-
-        // 饼图数据
-        /**
-         * 将一个饼形图分成四部分， 四部分的数值比例为14:14:34:38
-         * 所以 14代表的百分比就是14%
-         */
-        float quarterly1 = 14;
-        float quarterly2 = 14;
-        float quarterly3 = 34;
-        float quarterly4 = 38;
-
-        yValues.add(new Entry(quarterly1, 0));
-        yValues.add(new Entry(quarterly2, 1));
-        yValues.add(new Entry(quarterly3, 2));
-        yValues.add(new Entry(quarterly4, 3));
+//
+//        // 饼图数据
+//        /**
+//         * 将一个饼形图分成四部分， 四部分的数值比例为14:14:34:38
+//         * 所以 14代表的百分比就是14%
+//         */
+//        float quarterly1 = 14;
+//        float quarterly2 = 14;
+//        float quarterly3 = 34;
+//        float quarterly4 = 38;
+//
+//        yValues.add(new Entry(quarterly1, 0));
+//        yValues.add(new Entry(quarterly2, 1));
+//        yValues.add(new Entry(quarterly3, 2));
+//        yValues.add(new Entry(quarterly4, 3));
 
         //y轴的集合
         PieDataSet pieDataSet = new PieDataSet(yValues, "Quarterly Revenue 2014"/*显示在比例图上*/);
         pieDataSet.setSliceSpace(0f); //设置个饼状图之间的距离
 
-        ArrayList<Integer> colors = new ArrayList<Integer>();
 
         // 饼图颜色
-        colors.add(Color.rgb(205, 205, 205));
-        colors.add(Color.rgb(114, 188, 223));
-        colors.add(Color.rgb(255, 123, 124));
-        colors.add(Color.rgb(57, 135, 200));
+//        colors.add(Color.rgb(205, 205, 205));
+//        colors.add(Color.rgb(114, 188, 223));
+//        colors.add(Color.rgb(255, 123, 124));
+//        colors.add(Color.rgb(57, 135, 200));
 
         pieDataSet.setColors(colors);
 
@@ -133,5 +147,26 @@ public class PieChartAty extends Activity {
         PieData pieData = new PieData(xValues, pieDataSet);
 
         return pieData;
+    }
+
+    private int sum(int[] arr) {
+        int sum = 1;
+        if (arr.length != 0) {
+            for (int i = 0; i < arr.length; i++) {
+                sum += arr[i];
+            }
+            sum -= 1;
+        }
+        return sum;
+    }
+
+    private int genColor() {
+        final int MAX = 255;
+        final int MIN = 0;
+        Random random = new Random();
+        int r = random.nextInt(MAX) % (MAX - MIN + 1) + MIN;
+        int g = random.nextInt(MAX) % (MAX - MIN + 1) + MIN;
+        int b = random.nextInt(MAX) % (MAX - MIN + 1) + MIN;
+        return Color.rgb(r, g, b);
     }
 }

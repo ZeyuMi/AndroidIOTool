@@ -26,7 +26,9 @@
         <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/"/>
+                android:text="@string/anls_file_type"
+                android:id="@+id/anls_file_type"/>
+
     </LinearLayout>
 
 

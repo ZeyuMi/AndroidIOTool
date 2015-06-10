@@ -78,8 +78,8 @@ public class Analyzer implements AnalyzerInterface{
     }
 
     private void collectTraceFileList(){
-        //String path = Environment.getExternalStorageDirectory().toString()+"/strace";
-        String path = "strace";
+//        String path = Environment.getExternalStorageDirectory().toString()+"strace";
+        String path = "/data/strace";
         File f = new File(path);
         File file[] = f.listFiles();
         for (int i=0; i < file.length; i++){

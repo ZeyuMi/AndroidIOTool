@@ -78,6 +78,7 @@ public class AppListAty extends Activity {
         lv.setOnItemClickListener(listener);
     }
 
+    //TODO 这种方法并不好
     @Override
     protected void onRestart() {
         super.onRestart();

@@ -1,24 +1,28 @@
 package sjtu.csdi.AndroidIOTool;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import sjtu.csdi.AndroidIOTool.Tool.Commander;
 import sjtu.csdi.AndroidIOTool.analyze.Analyzer;
 import sjtu.csdi.AndroidIOTool.analyze.AnalyzerInterface;
+import sjtu.csdi.AndroidIOTool.chart.PieChartAty;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by Yang on 2015/6/10.
  */
 public class AnalyzerAty extends Activity {
+    private final String TAG = "AnalyzerAty";
 
     private Button analyseBtn;
     private Button cancenBtn;
-
-    private AnalyzerInterface analyzer = new Analyzer();
+    private Button anlsFileTypeBtn;
+    private AnalyzerInterface analyzer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,13 +31,19 @@ public class AnalyzerAty extends Activity {
 
         analyseBtn = (Button) findViewById(R.id.btn_analyse);
         cancenBtn = (Button) findViewById(R.id.btn_cancel_analyse);
+        anlsFileTypeBtn = (Button) findViewById(R.id.anls_file_type);
 
         BtnListener listener = new BtnListener();
         analyseBtn.setOnClickListener(listener);
         cancenBtn.setOnClickListener(listener);
+        anlsFileTypeBtn.setOnClickListener(listener);
+
+        analyzer = new Analyzer();
     }
 
     private class BtnListener implements View.OnClickListener {
+        private List<Integer> fileTypes;
+
 
         @Override
         public void onClick(View view) {
@@ -42,11 +52,37 @@ public class AnalyzerAty extends Activity {
                 case R.id.btn_analyse:
                     //TODO
                     analyzer.analyzeAll();
-                    Map<String, Long> res =  analyzer.getFileSizes();
+                    Log.i(TAG, "analyzeAll() is done");
                     break;
+
                 case R.id.btn_cancel_analyse:
                     Commander.clean();
                     finish();
+                    break;
+
+                case R.id.anls_file_type:
+//                    List<Map<String, Integer>> fileTypeList = new ArrayList<Map<String, Integer>>();
+//                    int typeNum = 6;
+//                    String typeKind = "R.string.filetype";
+//                    for (int i = 0; i < typeNum; i++) {
+//                        Map<String, Integer> map = new HashMap<String, Integer>();
+//                        int resId = getResources().getIdentifier(typeKind+i,"values",getApplicationContext().getPackageName());
+//                        map.put(getResources().getString(resId), fileTypes.get(i));
+//                        fileTypeList.add(map);
+//                    }
+                    fileTypes = analyzer.getFileTypeNums();
+                    Log.i(TAG, "getFileTypeNums() is done");
+
+                    String[] fileTypeTag = {"multimedia", "productivity", "executable", "sqlite", "resources", "other"};
+                    Integer[] fileTypeNum = new Integer[fileTypeTag.length];
+                    for (int i = 0; i < fileTypeTag.length; i++) {
+                        fileTypeNum[i] = fileTypes.get(0);
+                    }
+                    Intent intent = new Intent(AnalyzerAty.this, PieChartAty.class);
+                    intent.putExtra(getResources().getString(R.string.typeTag), fileTypeTag);
+                    intent.putExtra(getResources().getString(R.string.typeNum), fileTypeNum);
+                    intent.putExtra(getResources().getString(R.string.chartDescription), "None");
+                    startActivity(intent);
                     break;
             }
         }

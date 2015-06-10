@@ -17,4 +17,20 @@
 
     <string name="start_btn">开始测试</string>
     <string name="cancel_btn">取消测试</string>
+
+    <!--analyse buttons-->
+    <string name="anls_file_type">Analyse file type</string>
+
+    <!--file type-->
+    <string name="filetype0">multimedia</string>
+    <string name="filetype1">productivity</string>
+    <string name="filetype2">executable</string>
+    <string name="filetype3">sqlite</string>
+    <string name="filetype4">resources</string>
+    <string name="filetype5">other</string>
+
+    <!--pie chart-->
+    <string name="typeTag">kindTag</string>
+    <string name="typeNum">kindNum</string>
+    <string name="chartDescription">chartDescription</string>
 </resources>
