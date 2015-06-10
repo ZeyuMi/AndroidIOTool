@@ -17,7 +17,6 @@ import android.widget.Toast;
 import sjtu.csdi.AndroidIOTool.R;
 import sjtu.csdi.AndroidIOTool.Tool.Commander;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -137,15 +136,6 @@ public class CtrlServ extends Service {
             }
         });
 
-//        mMoveBtn.setOnClickListener(new OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                // TODO Auto-generated method stub
-//                Toast.makeText(CtrlServ.this, "onClick", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
         BtnClickListener listener = new BtnClickListener();
         mStartBtn.setOnClickListener(listener);
         mStopBtn.setOnClickListener(listener);
@@ -159,6 +149,7 @@ public class CtrlServ extends Service {
         if (mFloatLayout != null) {
             mWindowManager.removeView(mFloatLayout);
         }
+        Log.i(TAG, TAG + " is closed");
     }
 
     private class BtnClickListener implements OnClickListener {
@@ -168,12 +159,11 @@ public class CtrlServ extends Service {
             int id = view.getId();
             switch (id) {
                 case R.id.start_rcd:
-                    //TODO start to record file io
                     startRecord();
                     break;
 
                 case R.id.stop_rcd:
-                    //TODO stop recording file io
+                    stopRecord();
                     break;
 
                 case R.id.cancel_rcd:
@@ -199,13 +189,14 @@ public class CtrlServ extends Service {
                 }
             }
         }
-        try{
-            //Commander.su();
-            Commander.remount();
-            Commander.strace(pid);
-        } catch (IOException e){
-            e.printStackTrace();
-            Log.i(TAG,"strace :" + e.toString());
-        }
+        Commander.strace(pid);
+        Toast.makeText(getApplicationContext(),"Start recording...",Toast.LENGTH_SHORT);
+    }
+
+    public void stopRecord(){
+        //1.kill strace : pkill -f strace and chmod auth
+        Commander.stopStrace();
+        Toast.makeText(getApplicationContext(),"Stop recording...",Toast.LENGTH_SHORT);
+        onDestroy();
     }
 }

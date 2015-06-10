@@ -71,6 +71,12 @@ public class AppListAty extends Activity {
         lv.setOnItemClickListener(listener);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        startActivity(new Intent(AppListAty.this,AnalyzerAty.class));
+    }
+
     private class ItemclickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
