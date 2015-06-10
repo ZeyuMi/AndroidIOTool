@@ -1,8 +1,9 @@
+package sjtu.csdi.AndroidIOTool.analyze;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
