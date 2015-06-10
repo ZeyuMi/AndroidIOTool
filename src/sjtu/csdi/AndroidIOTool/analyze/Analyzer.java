@@ -124,15 +124,13 @@ public class Analyzer implements AnalyzerInterface{
             return fileNamesOfCurrentProcess.get(fd);
         else if(fileNamesInEnv.containsKey(fd))
             return fileNamesInEnv.get(fd);
-        else
+        else {
+            //String cmd = "readlink /proc/" + pid + "/fd/" + fd;
+            //String filename = Commander.executeWithReturnValue(cmd);
+            //if (!filename.equals("None"))
+            //    fileNamesInEnv.put(fd, filename);
             return "None";
-            //lastarg= "/proc/%s/fd/%s" %  (pid, fd)
-            //args = "adb shell su -c 'readlink %s'" % lastarg
-            //p = subprocess.Popen(args, stdout=subprocess.PIPE, shell=True)
-            //(filename, err) = p.communicate()
-            //filename = filename.strip()
-            //fileNamesOfParent[fd] = filename
-            // return "None";
+        }
     }
 
     private void analyzeAccessPatterns(Map<Integer, String> fileNames){

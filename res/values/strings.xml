@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">AndroidIOTool</string>
     <string name="app_list_tips">请点击选择需要测试的应用项</string>
+    <string name="app_analyse_history">分析历史数据</string>
 
     <string name="app_item_info">应用基本信息</string>
     <string name="app_item_name">应用名：</string>
