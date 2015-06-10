@@ -7,11 +7,13 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import sjtu.csdi.AndroidIOTool.control.CtrlServ;
 import sjtu.csdi.AndroidIOTool.control.ListAdapter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,15 +25,20 @@ public class AppListAty extends Activity {
     /**
      * Called when the activity is first created.
      */
-    ListView lv;
-    ListAdapter adapter;
-    PackageManager pm;
-    ArrayList<HashMap<String, Object>> items = new ArrayList<HashMap<String, Object>>();
+    private Button analyseBtn;
+    private ListView lv;
+    private ListAdapter adapter;
+    private PackageManager pm;
+    private ArrayList<HashMap<String, Object>> items = new ArrayList<HashMap<String, Object>>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_list);
+
+        analyseBtn = (Button) findViewById(R.id.btn_analyse_history);
+        analyseBtn.setOnClickListener(new BtnListener());
+
         lv = (ListView) findViewById(R.id.lv);
         pm = getPackageManager();
         //得到PackageManager对象
@@ -74,17 +81,19 @@ public class AppListAty extends Activity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        startActivity(new Intent(AppListAty.this,AnalyzerAty.class));
+        //checkFils
+        String path = "/data/strace";
+        File f = new File(path);
+        File file[] = f.listFiles();
+        if (file.length!=0){
+            startActivity(new Intent(AppListAty.this,AnalyzerAty.class));
+        }
     }
 
     private class ItemclickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             HashMap<String, Object> packageInfo = items.get(i);
-//            Intent intent = new Intent(AppListAty.this, AppItemAty.class);
-//            intent.putExtra(getResources().getString(R.string.APP_NAME_KEY), packageInfo.get("appName").toString());
-//            intent.putExtra(getResources().getString(R.string.APP_PACKAGENAME_KEY), packageInfo.get("packageName").toString());
-//            startActivity(intent);
             try{
                 Intent startIntent = pm.getLaunchIntentForPackage(packageInfo.get("packageName").toString());
                 //TODO 这里存在问题，有些app是不能调用startActivity的
@@ -95,6 +104,17 @@ public class AppListAty extends Activity {
             }catch (Exception e){
                 e.printStackTrace();
                 Toast.makeText(AppListAty.this, "This app cannot be open directly!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private class BtnListener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+            switch (id){
+                case R.id.btn_analyse_history:
+                    startActivity(new Intent(AppListAty.this, AnalyzerAty.class));
             }
         }
     }
