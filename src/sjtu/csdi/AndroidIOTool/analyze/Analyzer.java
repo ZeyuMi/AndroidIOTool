@@ -292,7 +292,6 @@ public class Analyzer implements AnalyzerInterface{
             }else{
                 otherTypeNum++;
                 otherTypeSize += fileSizes.get(filename);
-                System.out.println(filename);
             }
         }
 
