@@ -4,11 +4,10 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
         android:background="#FFFFFF">
-    <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/spread_pie_chart"
+    <com.github.mikephil.charting.charts.BarChart
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            >
-    </com.github.mikephil.charting.charts.PieChart>
+            android:id="@+id/bar_chart">
+
+    </com.github.mikephil.charting.charts.BarChart>
 </LinearLayout>

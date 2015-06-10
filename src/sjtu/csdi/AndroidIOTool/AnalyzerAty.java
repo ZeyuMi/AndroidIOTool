@@ -14,6 +14,7 @@ import java.util.Map;
  * Created by Yang on 2015/6/10.
  */
 public class AnalyzerAty extends Activity {
+
     private Button analyseBtn;
     private Button cancenBtn;
 

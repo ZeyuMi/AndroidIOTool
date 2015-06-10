@@ -21,7 +21,8 @@
         </activity>
         <activity android:name=".AppListAty"/>
         <activity android:name=".AnalyzerAty"/>
-        <activity android:name=".chart.ChartAty"/>
+        <activity android:name=".chart.PieChartAty"/>
+        <activity android:name=".chart.BarChartAty"/>
         <service android:enabled="true" android:name=".control.CtrlServ"/>
     </application>
 </manifest>

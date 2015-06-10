@@ -17,15 +17,15 @@ import java.util.ArrayList;
 /**
  * Created by Yang on 2015/6/10.
  */
-public class ChartAty extends Activity {
+public class PieChartAty extends Activity {
     private PieChart mChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.chart_aty);
+        setContentView(R.layout.piechart_aty);
 
-        mChart = (PieChart) findViewById(R.id.spread_pie_chart);
+        mChart = (PieChart) findViewById(R.id.pie_chart);
         PieData mPieData = getPieData(4, 100);
         showChart(mChart, mPieData);
     }

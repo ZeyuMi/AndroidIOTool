@@ -3,7 +3,7 @@ package sjtu.csdi.AndroidIOTool;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import sjtu.csdi.AndroidIOTool.chart.ChartAty;
+import sjtu.csdi.AndroidIOTool.chart.BarChartAty;
 
 public class MainAty extends Activity {
     /**
@@ -15,7 +15,7 @@ public class MainAty extends Activity {
         setContentView(R.layout.main);
 
 //        startActivity(new Intent(MainAty.this, AppListAty.class));
-        startActivity(new Intent(MainAty.this, ChartAty.class));
+        startActivity(new Intent(MainAty.this, BarChartAty.class));
         this.finish();
     }
 }
