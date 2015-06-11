@@ -32,9 +32,10 @@ public class PieChartAty extends Activity {
         setContentView(R.layout.piechart_aty);
 
         Intent intent = getIntent();
-        typeTag = intent.getStringArrayExtra(getResources().getString(R.string.typeTag));
-        //TODO
-        typeNum = intent.getIntArrayExtra(getResources().getString(R.string.typeNum));
+        Bundle bundle = intent.getExtras();
+        typeTag = bundle.getStringArray(getResources().getString(R.string.typeTag));
+        typeNum = bundle.getIntArray(getResources().getString(R.string.typeNum));
+        description = bundle.getString(getResources().getString(R.string.chartDescription));
 
         mChart = (PieChart) findViewById(R.id.pie_chart);
         PieData mPieData = getPieData();
@@ -49,7 +50,7 @@ public class PieChartAty extends Activity {
         pieChart.setTransparentCircleRadius(64f); // 半透明圈
         //pieChart.setHoleRadius(0)  //实心圆
 
-        pieChart.setDescription("测试饼状图");
+        pieChart.setDescription(description);
 
         // mChart.setDrawYValues(true);
         pieChart.setDrawCenterText(true);  //饼状图中间可以添加文字
@@ -106,7 +107,7 @@ public class PieChartAty extends Activity {
         for (int i = 0; i < count; i++) {
             if (typeNum[i] != 0) {
                 xValues.add(typeTag[i]);
-                yValues.add(new Entry(typeNum[i] / totalNum, i));
+                yValues.add(new Entry(100 * typeNum[i] / totalNum, i)); //该type所占比例
                 colors.add(genColor());
             }
         }

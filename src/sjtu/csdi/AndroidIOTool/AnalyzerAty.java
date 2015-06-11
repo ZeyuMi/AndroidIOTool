@@ -61,26 +61,17 @@ public class AnalyzerAty extends Activity {
                     break;
 
                 case R.id.anls_file_type:
-//                    List<Map<String, Integer>> fileTypeList = new ArrayList<Map<String, Integer>>();
-//                    int typeNum = 6;
-//                    String typeKind = "R.string.filetype";
-//                    for (int i = 0; i < typeNum; i++) {
-//                        Map<String, Integer> map = new HashMap<String, Integer>();
-//                        int resId = getResources().getIdentifier(typeKind+i,"values",getApplicationContext().getPackageName());
-//                        map.put(getResources().getString(resId), fileTypes.get(i));
-//                        fileTypeList.add(map);
-//                    }
                     fileTypes = analyzer.getFileTypeNums();
                     Log.i(TAG, "getFileTypeNums() is done");
 
                     String[] fileTypeTag = {"multimedia", "productivity", "executable", "sqlite", "resources", "other"};
-                    Integer[] fileTypeNum = new Integer[fileTypeTag.length];
+                    int[] fileTypeNum = new int[fileTypeTag.length];
                     for (int i = 0; i < fileTypeTag.length; i++) {
                         fileTypeNum[i] = fileTypes.get(0);
                     }
                     Intent intent = new Intent(AnalyzerAty.this, PieChartAty.class);
                     intent.putExtra(getResources().getString(R.string.typeTag), fileTypeTag);
-                    intent.putExtra(getResources().getString(R.string.typeNum), fileTypeNum);
+                    intent.putExtra(getResources().getString(R.string.typeNum),fileTypeNum);
                     intent.putExtra(getResources().getString(R.string.chartDescription), "None");
                     startActivity(intent);
                     break;

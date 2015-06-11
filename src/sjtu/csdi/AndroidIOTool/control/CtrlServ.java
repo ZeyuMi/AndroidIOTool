@@ -51,8 +51,12 @@ public class CtrlServ extends Service {
 
     @Override
     public void onStart(Intent intent, int startId) {
-        packageName = intent.getStringExtra("packageName");
-        Log.i(TAG, "current running app: " + packageName);
+        try {
+            packageName = intent.getStringExtra("packageName");
+            Log.i(TAG, "current running app: " + packageName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -174,29 +178,29 @@ public class CtrlServ extends Service {
         }
     }
 
-    private void startRecord(){
+    private void startRecord() {
         String[] pkgList;
         int pid = 0;
         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningAppProcessInfo> runningApps =  am.getRunningAppProcesses();
-        for (ActivityManager.RunningAppProcessInfo app : runningApps){
+        List<ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
+        for (ActivityManager.RunningAppProcessInfo app : runningApps) {
             pkgList = app.pkgList;
-            for (int i=0;i<pkgList.length;i++){
-                if (pkgList[i].equals(packageName)){
+            for (int i = 0; i < pkgList.length; i++) {
+                if (pkgList[i].equals(packageName)) {
                     pid = app.pid;
-                    Log.i(TAG,"current pid:" + pid);
+                    Log.i(TAG, "current pid:" + pid);
                     break;
                 }
             }
         }
         Commander.strace(pid);
-        Toast.makeText(getApplicationContext(),"Start recording...",Toast.LENGTH_SHORT);
+        Toast.makeText(getApplicationContext(), "Start recording...", Toast.LENGTH_SHORT);
     }
 
-    public void stopRecord(){
+    public void stopRecord() {
         //1.kill strace : pkill -f strace and chmod auth
         Commander.stopStrace();
-        Toast.makeText(getApplicationContext(),"Stop recording...",Toast.LENGTH_SHORT);
+        Toast.makeText(getApplicationContext(), "Stop recording...", Toast.LENGTH_SHORT);
         onDestroy();
     }
 }

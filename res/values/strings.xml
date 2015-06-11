@@ -30,7 +30,7 @@
     <string name="filetype5">other</string>
 
     <!--pie chart-->
-    <string name="typeTag">kindTag</string>
-    <string name="typeNum">kindNum</string>
+    <string name="typeTag">typeTag</string>
+    <string name="typeNum">typeNum</string>
     <string name="chartDescription">chartDescription</string>
 </resources>
