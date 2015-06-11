@@ -3,6 +3,10 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+        <Button android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_analyse_history"
+                android:id="@+id/btn_analyse_history"/>
 
         <TextView
                 android:layout_width="wrap_content"

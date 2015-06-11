@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">AndroidIOTool</string>
     <string name="app_list_tips">请点击选择需要测试的应用项</string>
+    <string name="app_analyse_history">分析历史数据</string>
 
     <string name="app_item_info">应用基本信息</string>
     <string name="app_item_name">应用名：</string>
@@ -16,4 +17,22 @@
 
     <string name="start_btn">开始测试</string>
     <string name="cancel_btn">取消测试</string>
+
+    <!--analyse buttons-->
+    <string name="anls_file_type">Analyse file type</string>
+
+    <!--file type-->
+    <string name="filetype0">multimedia</string>
+    <string name="filetype1">productivity</string>
+    <string name="filetype2">executable</string>
+    <string name="filetype3">sqlite</string>
+    <string name="filetype4">resources</string>
+    <string name="filetype5">other</string>
+
+    <!--chart-->
+    <string name="typeTag">typeTag</string> <!---->
+    <string name="typeNum">typeNum</string> <!---->
+    <string name="chartDescription">chartDescription</string>   <!---->
+    <string name="typeIntro">typeIntro</string>
+
 </resources>

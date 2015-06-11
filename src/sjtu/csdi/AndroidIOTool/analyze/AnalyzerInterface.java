@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-import java.lang.reflect.Array;
-=======
 package sjtu.csdi.AndroidIOTool.analyze;
 
->>>>>>> 8a6fc1128188691deeb7ac7bd148bd8c107b745c
 import java.util.ArrayList;
 import java.util.Map;
 

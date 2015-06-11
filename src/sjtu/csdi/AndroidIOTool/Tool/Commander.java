@@ -79,10 +79,41 @@ public class Commander {
         }
     }
 
+    public static String executeWithReturnValue(String cmd){
+        Process p;
+        try {
+            p = Runtime.getRuntime().exec("su");
+            DataOutputStream os = new DataOutputStream(p.getOutputStream());
+            BufferedReader bf = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+            os.writeBytes(cmd + "\n");
+            os.writeBytes("exit\n");
+            bf.readLine();
+            String result;
+            while((result = bf.readLine()) != null)
+            {
+                break;
+            }
+            os.flush();
+            if (result != null)
+                return result;
+            else
+                return "None";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "None";
+        }
+    }
+
     public static void stopStrace(){
         String killCmd = "pkill -f strace";
         String chmdCmd = "chmod 777 /data/strace /data/strace/*";
         String cmd = killCmd + ";" + chmdCmd;
+        execute(cmd);
+    }
+
+    public static void clean(){
+        String cmd = "rm /data/strace/*";
         execute(cmd);
     }
 }
