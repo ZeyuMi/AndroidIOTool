@@ -9,7 +9,7 @@ import android.widget.Button;
 import sjtu.csdi.AndroidIOTool.Tool.Commander;
 import sjtu.csdi.AndroidIOTool.analyze.Analyzer;
 import sjtu.csdi.AndroidIOTool.analyze.AnalyzerInterface;
-import sjtu.csdi.AndroidIOTool.chart.PieChartAty;
+import sjtu.csdi.AndroidIOTool.chart.BarChartAty;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class AnalyzerAty extends Activity {
 
     private Button analyseBtn;
     private Button cancenBtn;
-    private Button anlsFileTypeBtn;
+    private Button fileTypeNumBtn;
     private AnalyzerInterface analyzer;
 
     @Override
@@ -31,12 +31,12 @@ public class AnalyzerAty extends Activity {
 
         analyseBtn = (Button) findViewById(R.id.btn_analyse);
         cancenBtn = (Button) findViewById(R.id.btn_cancel_analyse);
-        anlsFileTypeBtn = (Button) findViewById(R.id.anls_file_type);
+        fileTypeNumBtn = (Button) findViewById(R.id.file_type_num);
 
         BtnListener listener = new BtnListener();
         analyseBtn.setOnClickListener(listener);
         cancenBtn.setOnClickListener(listener);
-        anlsFileTypeBtn.setOnClickListener(listener);
+        fileTypeNumBtn.setOnClickListener(listener);
 
         analyzer = new Analyzer();
     }
@@ -60,20 +60,22 @@ public class AnalyzerAty extends Activity {
                     finish();
                     break;
 
-                case R.id.anls_file_type:
+                case R.id.file_type_num:
                     fileTypes = analyzer.getFileTypeNums();
                     Log.i(TAG, "getFileTypeNums() is done");
 
                     String[] fileTypeTag = {"multimedia", "productivity", "executable", "sqlite", "resources", "other"};
                     int[] fileTypeNum = new int[fileTypeTag.length];
+
                     for (int i = 0; i < fileTypeTag.length; i++) {
                         fileTypeNum[i] = fileTypes.get(i);
                     }
-                    Intent intent = new Intent(AnalyzerAty.this, PieChartAty.class);
+
+                    Intent intent = new Intent(AnalyzerAty.this, BarChartAty.class);
                     intent.putExtra(getResources().getString(R.string.typeTag), fileTypeTag);
-                    intent.putExtra(getResources().getString(R.string.typeNum),fileTypeNum);
+                    intent.putExtra(getResources().getString(R.string.typeNum), fileTypeNum);
                     intent.putExtra(getResources().getString(R.string.chartDescription), "File Type Pie Chart");
-                    intent.putExtra(getResources().getString(R.string.typeIntro),"File Type");
+                    intent.putExtra(getResources().getString(R.string.typeIntro), "File Type");
                     startActivity(intent);
                     break;
             }

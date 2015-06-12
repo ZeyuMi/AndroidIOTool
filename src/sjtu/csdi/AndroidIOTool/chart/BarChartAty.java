@@ -1,6 +1,7 @@
 package sjtu.csdi.AndroidIOTool.chart;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import com.github.mikephil.charting.charts.BarChart;
@@ -10,12 +11,17 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import sjtu.csdi.AndroidIOTool.R;
+
 import java.util.ArrayList;
 
 /**
  * Created by Yang on 2015/6/10.
  */
 public class BarChartAty extends Activity {
+    private String[] typeTag;   //数据类型说明，及xValue
+    private int[] typeNum;      //每种数据类型所对应的数据量，及yValue
+    private String typeIntro;   //数据类型的说明
+    private String description; //pie chart的描述信息
 
     private BarChart mBarChart;
     private BarData mBarData;
@@ -25,15 +31,22 @@ public class BarChartAty extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.barchart_aty);
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        typeTag = bundle.getStringArray(getResources().getString(R.string.typeTag));
+        typeNum = bundle.getIntArray(getResources().getString(R.string.typeNum));
+        description = bundle.getString(getResources().getString(R.string.chartDescription));
+        typeIntro = bundle.getString(getResources().getString(R.string.typeIntro));
+
         mBarChart = (BarChart) findViewById(R.id.bar_chart);
-        mBarData = getBarData(4, 100);
+        mBarData = getBarData();
         showBarChart(mBarChart, mBarData);
     }
 
     private void showBarChart(BarChart barChart, BarData barData) {
         barChart.setDrawBorders(false);  ////是否在折线图上添加边框
 
-        barChart.setDescription("");// 数据描述
+        barChart.setDescription(typeIntro);// 数据描述
 
         // 如果没有数据的时候，会显示这个，类似ListView的EmptyView
         barChart.setNoDataTextDescription("You need to provide data for the chart.");
@@ -67,21 +80,22 @@ public class BarChartAty extends Activity {
         barChart.animateX(2500); // 立即执行的动画,x轴
     }
 
-    private BarData getBarData(int count, float range) {
+    private BarData getBarData() {
         ArrayList<String> xValues = new ArrayList<String>();
-        for (int i = 0; i < count; i++) {
-            xValues.add("第" + (i + 1) + "季度");
-        }
-
         ArrayList<BarEntry> yValues = new ArrayList<BarEntry>();
 
+        int count = typeTag.length;
+        int order = 0;
+
         for (int i = 0; i < count; i++) {
-            float value = (float) (Math.random() * range/*100以内的随机数*/) + 3;
-            yValues.add(new BarEntry(value, i));
+            if (typeNum[i] != 0) {
+                xValues.add(typeTag[i]);
+                yValues.add(new BarEntry(typeNum[i], order++));
+            }
         }
 
         // y轴的数据集合
-        BarDataSet barDataSet = new BarDataSet(yValues, "测试饼状图");
+        BarDataSet barDataSet = new BarDataSet(yValues, description);
 
         barDataSet.setColor(Color.rgb(114, 188, 223));
 

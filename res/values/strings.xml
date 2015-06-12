@@ -19,7 +19,20 @@
     <string name="cancel_btn">取消测试</string>
 
     <!--analyse buttons-->
-    <string name="anls_file_type">Analyse file type</string>
+    <string name="file_type_num">getFileTypeNums</string>
+    <string name="file_type_size">getFileTypeSizes</string>
+    <string name="file_size">getFileSizes</string>
+    <string name="acc_num">getAccessNum</string>
+    <string name="acc_size">getAccessSize</string>
+    <string name="seq_size">getSequentialSizes</string>
+    <string name="nseq_size">getNonSequentialSize</string>
+    <string name="total_seq_res">getTotalSequentialResult</string>
+    <string name="preallc_size">getPreallocationSizes</string>
+    <string name="fsync_table">getFsyncTable</string>
+    <string name="atomic_size">getAtomicSizes</string>
+    <string name="acc_sizeOfThreads">getAccessSizeOfThreads</string>
+    <string name="acc_patternsOfThreads">getAccessPatternsOfThreads</string>
+
 
     <!--file type-->
     <string name="filetype0">multimedia</string>

@@ -18,15 +18,18 @@ import java.util.Random;
 
 /**
  * Created by Yang on 2015/6/10.
+ * Pie Chart的用法
+ * Activity A启动pie chart Activity时，需要向其的intent中传递构图数据
  */
 
 public class PieChartAty extends Activity {
-    private String[] typeTag;
-    private int[] typeNum;
-    private String description;
-    private String typeIntro;
+    private String[] typeTag;   //数据类型说明，及xValue
+    private int[] typeNum;      //每种数据类型所对应的数据量，及yValue
+    private String typeIntro;   //数据类型的说明
+    private String description; //pie chart的描述信息
 
     private PieChart mChart;
+    private PieData mPieData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,7 @@ public class PieChartAty extends Activity {
         typeIntro = bundle.getString(getResources().getString(R.string.typeIntro));
 
         mChart = (PieChart) findViewById(R.id.pie_chart);
-        PieData mPieData = getPieData();
+        mPieData = getPieData();
 
         showChart(mChart, mPieData);
     }
