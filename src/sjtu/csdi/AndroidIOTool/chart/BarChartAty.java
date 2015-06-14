@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class BarChartAty extends Activity {
     private String[] typeTag;   //数据类型说明，及xValue
-    private int[] typeNum;      //每种数据类型所对应的数据量，及yValue
+    private long[] typeNum;      //每种数据类型所对应的数据量，及yValue
     private String typeIntro;   //数据类型的说明
     private String description; //pie chart的描述信息
 
@@ -34,7 +34,7 @@ public class BarChartAty extends Activity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         typeTag = bundle.getStringArray(getResources().getString(R.string.typeTag));
-        typeNum = bundle.getIntArray(getResources().getString(R.string.typeNum));
+        typeNum = bundle.getLongArray(getResources().getString(R.string.typeNum));
         description = bundle.getString(getResources().getString(R.string.chartDescription));
         typeIntro = bundle.getString(getResources().getString(R.string.typeIntro));
 

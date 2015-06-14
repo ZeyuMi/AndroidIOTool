@@ -25,12 +25,17 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""/>
+
             <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/file_type_num"
                     android:id="@+id/file_type_num"/>
-
+            <!--
             <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -42,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/acc_num"
                     android:id="@+id/acc_num"/>
+            -->
 
             <Button
                     android:layout_width="match_parent"
@@ -49,6 +55,7 @@
                     android:text="@string/acc_size"
                     android:id="@+id/acc_size"/>
 
+            <!--
             <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -60,12 +67,21 @@
                     android:layout_height="wrap_content"
                     android:text="@string/nseq_size"
                     android:id="@+id/nseq_size"/>
+            -->
 
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_seq_res"
+                    android:id="@+id/total_seq_res"/>
+
+            <!--
             <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/preallc_size"
                     android:id="@+id/preallc_size"/>
+              -->
 
             <Button
                     android:layout_width="match_parent"
@@ -73,6 +89,7 @@
                     android:text="@string/fsync_table"
                     android:id="@+id/fsync_table"/>
 
+            <!--
             <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -84,6 +101,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/acc_sizeOfThreads"
                     android:id="@+id/acc_sizeOfThreads"/>
+            -->
 
             <Button
                     android:layout_width="match_parent"
