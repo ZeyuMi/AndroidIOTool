@@ -1,6 +1,8 @@
 package sjtu.csdi.AndroidIOTool.control;
 
 import android.app.ActivityManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +16,7 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import sjtu.csdi.AndroidIOTool.AnalyzerAty;
 import sjtu.csdi.AndroidIOTool.R;
 import sjtu.csdi.AndroidIOTool.Tool.Commander;
 
@@ -57,6 +60,24 @@ public class CtrlServ extends Service {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+////        return super.onStartCommand(intent, flags, startId);
+        Log.i(TAG, "[onStartCommand]Received start id " + startId + ": " + intent);
+//        return START_STICKY;
+        Notification notification = new Notification(R.drawable.ic_launcher,
+                getString(R.string.app_name), System.currentTimeMillis());
+        notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL;
+        PendingIntent pendingintent = PendingIntent.getActivity(this, 0,
+                new Intent(this, AnalyzerAty.class), 0);
+        notification.setLatestEventInfo(this, "recording now...", "请保持程序在后台运行",
+                pendingintent);
+        startForeground(0x111, notification);
+
+        flags = START_STICKY;
+        return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
@@ -201,6 +222,6 @@ public class CtrlServ extends Service {
         //1.kill strace : pkill -f strace and chmod auth
         Commander.stopStrace();
         Toast.makeText(getApplicationContext(), "Stop recording...", Toast.LENGTH_SHORT);
-        onDestroy();
+        this.stopSelf();
     }
 }
