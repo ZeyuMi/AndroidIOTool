@@ -14,6 +14,7 @@ public class MainAty extends Activity {
         setContentView(R.layout.main);
 
         startActivity(new Intent(MainAty.this, AppListAty.class));
+//        startActivity(new Intent(MainAty.this, BarChartAty.class));
         this.finish();
     }
 }

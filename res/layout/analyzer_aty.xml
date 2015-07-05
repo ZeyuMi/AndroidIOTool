@@ -3,5 +3,117 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:gravity="center_horizontal">
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="analyse"
+                android:id="@+id/btn_analyse"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="cancel"
+                android:id="@+id/btn_cancel_analyse"/>
+    </LinearLayout>
+
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""/>
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/file_type_num"
+                    android:id="@+id/file_type_num"/>
+            <!--
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/file_size"
+                    android:id="@+id/file_size"/>
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/acc_num"
+                    android:id="@+id/acc_num"/>
+            -->
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/acc_size"
+                    android:id="@+id/acc_size"/>
+
+            <!--
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/seq_size"
+                    android:id="@+id/seq_size"/>
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nseq_size"
+                    android:id="@+id/nseq_size"/>
+            -->
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_seq_res"
+                    android:id="@+id/total_seq_res"/>
+
+            <!--
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/preallc_size"
+                    android:id="@+id/preallc_size"/>
+              -->
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fsync_table"
+                    android:id="@+id/fsync_table"/>
+
+            <!--
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/atomic_size"
+                    android:id="@+id/atomic_size"/>
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/acc_sizeOfThreads"
+                    android:id="@+id/acc_sizeOfThreads"/>
+            -->
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/acc_patternsOfThreads"
+                    android:id="@+id/acc_patternsOfThreads"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
 
 </LinearLayout>

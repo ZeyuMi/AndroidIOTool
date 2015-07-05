@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">AndroidIOTool</string>
     <string name="app_list_tips">请点击选择需要测试的应用项</string>
+    <string name="app_analyse_history">分析历史数据</string>
 
     <string name="app_item_info">应用基本信息</string>
     <string name="app_item_name">应用名：</string>
@@ -16,4 +17,35 @@
 
     <string name="start_btn">开始测试</string>
     <string name="cancel_btn">取消测试</string>
+
+    <!--analyse buttons-->
+    <string name="file_type_num">getFileTypeNums</string>
+    <string name="file_type_size">getFileTypeSizes</string>
+    <string name="file_size">getFileSizes</string>
+    <string name="acc_num">getAccessNum</string>
+    <string name="acc_size">getAccessSize</string>
+    <string name="seq_size">getSequentialSizes</string>
+    <string name="nseq_size">getNonSequentialSize</string>
+    <string name="total_seq_res">getTotalSequentialResult</string>
+    <string name="preallc_size">getPreallocationSizes</string>
+    <string name="fsync_table">getFsyncTable</string>
+    <string name="atomic_size">getAtomicSizes</string>
+    <string name="acc_sizeOfThreads">getAccessSizeOfThreads</string>
+    <string name="acc_patternsOfThreads">getAccessPatternsOfThreads</string>
+
+
+    <!--file type-->
+    <string name="filetype0">multimedia</string>
+    <string name="filetype1">productivity</string>
+    <string name="filetype2">executable</string>
+    <string name="filetype3">sqlite</string>
+    <string name="filetype4">resources</string>
+    <string name="filetype5">other</string>
+
+    <!--chart-->
+    <string name="typeTag">typeTag</string> <!---->
+    <string name="typeNum">typeNum</string> <!---->
+    <string name="chartDescription">chartDescription</string>   <!---->
+    <string name="typeIntro">typeIntro</string>
+
 </resources>
